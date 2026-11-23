@@ -1,0 +1,24 @@
+name: Testes E2E (Cypress)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Executar testes Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+
+      - name: Salvar prints das falhas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prints-das-falhas
+          path: cypress/screenshots
+          if-no-files-found: ignore
